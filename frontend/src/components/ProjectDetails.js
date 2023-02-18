@@ -1,7 +1,40 @@
 import React from "react";
+import { useParams } from "react-router-dom";
+import { useProjectContext } from "../hooks/useProjectContext";
 import { currencyFormatter } from "../utils/currencyFormatter";
 
 const ProjectDetails = ({ project }) => {
+  const { dispatch } = useProjectContext();
+
+  const handleDelete = async (id) => {
+    const res = await fetch(
+      `http://localhost:5000/api/projects/${project._id}`,
+      {
+        method: "DELETE",
+      }
+    );
+    const json = await res.json();
+    if(res.ok){
+      dispatch({
+        type: 'DELETE_PROJECT',
+        payload: json
+      })
+    }
+  };
+
+  const handleEdit = async () => {
+    const res = await fetch(`http://localhost:5000/api/projects/${project._id}`,{
+      method: 'UPDATE'
+    })
+    const json = await res.json()
+    if(res.ok){
+      dispatch({
+        type: 'UPDATE_PROJECT',
+        payload: json
+      })
+    }
+  }
+
   return (
     <div className="project-info bg-[#F5EFDF] text-[#111013] w-[30rem] p-4">
       <span className="text-cyan-900">ID: {project._id}</span>
@@ -17,8 +50,13 @@ const ProjectDetails = ({ project }) => {
         </span>
       </div>
       <div className="button flex gap-5 pt-3">
-        <button className="bg-slate-800 text-white py-2 px-4">Update</button>
-        <button className="bg-slate-800 text-white py-2 px-4">Delete</button>
+        <button onClick={handleEdit} className="bg-slate-800 text-white py-2 px-4">Update</button>
+        <button
+          onClick={handleDelete}
+          className="bg-slate-800 text-white py-2 px-4"
+        >
+          Delete
+        </button>
       </div>
     </div>
   );
