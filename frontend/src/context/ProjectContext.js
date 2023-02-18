@@ -8,12 +8,19 @@ export const projectReducer = (state, action) => {
   switch (action.type) {
     case "SET_PROJECT":
       return {
+        ...state,
         projects: action.payload,
       };
     case "CREATE_PROJECT":
       return {
+        ...state,
         projects: [action.payload, ...state.projects],
       };
+      case "DELETE_PROJECT":
+        return {
+            
+        }
+
     default:
       return state;
   }

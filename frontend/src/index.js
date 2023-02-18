@@ -3,15 +3,15 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { BrowserRouter } from "react-router-dom";
-import { ProjectContext } from "./context/ProjectContext";
+import { ProjectContextProvider } from "./context/ProjectContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <ProjectContext.Provider>
+      <ProjectContextProvider>
         <App />
-      </ProjectContext.Provider>
+      </ProjectContextProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
